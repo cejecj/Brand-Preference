@@ -1,7 +1,6 @@
 # import libraries
 library(caret)
 library(mlbench)
-library(tidyverse)
 
 # load data
 completeResponses <- read.csv('CompleteResponses.csv')
@@ -26,19 +25,23 @@ training <- completeResponses[inTrain,]
 testing <- completeResponses[-inTrain,]
 
 # set fit control
-fitControl <- trainControl(method = 'repeatedcv', number = 10, repeats = 1)
+fitControl <- trainControl(method = 'repeatedcv', number = 10, repeats = 3)
 
 # random forest
 rfGrid <- expand.grid(mtry = c(3))
-rfFit <- train(brand~., data = training, method = 'rf', trControl = fitControl, tuneGrid = rfGrid)
+system.time(rfFit <- train(brand ~ ., data = training, method = 'rf', trControl = fitControl, tuneGrid = rfGrid))
 
 # c5.0
-c5 <- train(brand~., data = training, method = 'C5.0', trControl = fitControl, tuneLength = 2)
+system.time(c5 <- train(brand ~ ., data = training, method = 'C5.0', trControl = fitControl, tuneLength = 15))
 
 # predict brand preference of incomplete surveys
-predictionsC5 <- predict(c5, incompleteResponses)
 predictionsRF <- predict(rfFit, incompleteResponses)
+predictionsC5 <- predict(c5, incompleteResponses)
+
+# show results
+rfFit
+c5
 
 # summarize predictions
-summary(predictionsC5)
 summary(predictionsRF)
+summary(predictionsC5)
