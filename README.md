@@ -1,4 +1,4 @@
-"# Brand-Preference" 
+Brand-Preference
 
 Academic project through UT Data Analytics
 
