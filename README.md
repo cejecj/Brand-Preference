@@ -1,8 +1,5 @@
 Brand-Preference
 
-Academic project through UT Data Analytics
-
-
 
 Predicting customer preference using demographic data:
   - CompleteResponses.csv = 10,000 completed surveys with 6 demographic data points as well as the customer's preferred brand
